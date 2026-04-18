@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 from wav2mp3.scanner import find_wav_files, find_cover_art
-from wav2mp3.parser import parse_filename
+from wav2mp3.parser import parse_filename, parse_folder_name, build_output_filename
 from wav2mp3.prompts import prompt_shared_tags, prompt_track_review
 from wav2mp3.converter import check_ffmpeg, convert_wav_to_mp3
 from wav2mp3.tagger import apply_tags
@@ -16,8 +16,10 @@ def main():
     )
     parser.add_argument(
         "folder",
+        nargs="?",
         type=Path,
-        help="Path to folder containing WAV files",
+        default=Path.cwd(),
+        help="Path to folder containing WAV files (default: current directory)",
     )
     args = parser.parse_args()
 
@@ -42,8 +44,11 @@ def main():
 
     print(f"\nFound {len(wav_files)} WAV file(s) in {folder}")
 
-    # Step 2: Shared tags
-    shared = prompt_shared_tags(cover_art)
+    # Step 2: Parse folder name for defaults
+    folder_info = parse_folder_name(folder.name)
+
+    # Step 3: Shared tags
+    shared = prompt_shared_tags(cover_art, folder_info)
 
     # Step 3: Parse per-track tags
     tracks = []
@@ -79,6 +84,12 @@ def main():
             "genre": shared["genre"],
         }
         apply_tags(mp3_path, tags, cover_art)
+
+        # Rename to clean format
+        clean_name = build_output_filename(track) + ".mp3"
+        clean_path = mp3_path.parent / clean_name
+        if clean_path != mp3_path:
+            mp3_path.rename(clean_path)
 
         converted += 1
         print("OK")

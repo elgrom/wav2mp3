@@ -3,8 +3,12 @@ from pathlib import Path
 from typing import Optional, List, Dict
 
 
-def prompt_shared_tags(cover_art: Optional[Path]) -> dict:
+def prompt_shared_tags(cover_art: Optional[Path], folder_info: Optional[Dict] = None) -> dict:
     """Prompt for shared album-level tags.
+
+    Args:
+        cover_art: Path to cover art image, or None.
+        folder_info: Dict from parse_folder_name with keys: artist, album, year.
 
     Returns dict with keys: album, album_artist, genre, year.
     """
@@ -13,13 +17,18 @@ def prompt_shared_tags(cover_art: Optional[Path]) -> dict:
     else:
         print("\nNo cover art found — skipping artwork embedding.")
 
+    folder_info = folder_info or {}
+    default_album = folder_info.get("album") or "My Album"
+    default_artist = folder_info.get("artist") or "Various Artists"
+    default_year = folder_info.get("year") or str(datetime.now().year)
+
     print("\n── Shared Tags ──────────────────────")
     print("Press Enter to accept [default], or type a new value.\n")
 
-    album = input(f"  Album [My Album]: ").strip() or "My Album"
-    album_artist = input(f"  Album Artist [Various Artists]: ").strip() or "Various Artists"
+    album = input(f"  Album [{default_album}]: ").strip() or default_album
+    album_artist = input(f"  Album Artist [{default_artist}]: ").strip() or default_artist
     genre = input(f"  Genre [Electronic]: ").strip() or "Electronic"
-    year = input(f"  Year [{datetime.now().year}]: ").strip() or str(datetime.now().year)
+    year = input(f"  Year [{default_year}]: ").strip() or default_year
 
     return {
         "album": album,
