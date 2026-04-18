@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wav2mp3"
+version = "0.1.0"
+description = "Convert WAV files to MP3 with ID3 tags and cover art"
+requires-python = ">=3.9"
+dependencies = [
+    "mutagen>=1.47",
+]
+
+[project.scripts]
+wav2mp3 = "wav2mp3.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
