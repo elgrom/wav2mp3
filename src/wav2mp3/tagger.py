@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Optional
-from mutagen.id3 import ID3, TIT2, TPE1, TPE2, TALB, TRCK, TDRC, TCON, APIC
+from mutagen.id3 import ID3, TIT2, TPE1, TPE2, TALB, TRCK, TDRC, TCON, TPUB, APIC
 from mutagen.mp3 import MP3
 
 
@@ -36,6 +36,8 @@ def apply_tags(mp3_path: Path, tags: dict, cover_art_path: Optional[Path] = None
         tag.add(TDRC(encoding=3, text=str(tags["year"])))
     if tags.get("genre"):
         tag.add(TCON(encoding=3, text=tags["genre"]))
+    if tags.get("label"):
+        tag.add(TPUB(encoding=3, text=tags["label"]))
 
     if cover_art_path and cover_art_path.exists():
         mime = "image/jpeg" if cover_art_path.suffix.lower() in (".jpg", ".jpeg") else "image/png"

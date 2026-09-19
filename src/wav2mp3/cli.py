@@ -130,6 +130,7 @@ def main():
             "track": track["track"],
             "year": shared["year"],
             "genre": shared["genre"],
+            "label": shared["label"],
         }
         apply_tags(mp3_path, tags, cover_art)
 

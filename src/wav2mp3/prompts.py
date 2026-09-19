@@ -27,12 +27,14 @@ def prompt_shared_tags(cover_art: Optional[Path], folder_info: Optional[Dict] = 
 
     album = input(f"  Album [{default_album}]: ").strip() or default_album
     album_artist = input(f"  Album Artist [{default_artist}]: ").strip() or default_artist
+    label = input(f"  Label []: ").strip()
     genre = input(f"  Genre [Electronic]: ").strip() or "Electronic"
     year = input(f"  Year [{default_year}]: ").strip() or default_year
 
     return {
         "album": album,
         "album_artist": album_artist,
+        "label": label,
         "genre": genre,
         "year": year,
     }
