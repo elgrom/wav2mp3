@@ -27,7 +27,7 @@ wav2mp3 --cover https://example.com/cover.jpg /path/to/folder
 ### What it does
 
 1. Scans the folder (or accepts a single `.wav` file) for WAV files and cover art
-2. Prompts for shared tags (album, album artist, genre, year)
+2. Prompts for shared tags (album, album artist, label, genre, year)
 3. Parses track info from filenames (expected format: `## - Artist - Title.wav`)
 4. Lets you review and edit tags before converting
 5. Converts to 320 kbps CBR MP3 via ffmpeg
@@ -52,3 +52,16 @@ wav2mp3 --cover https://example.com/art.jpg track.wav
 ```
 
 Without `--cover`, the tool auto-detects images in the folder in this order: `cover.jpg`, `cover.png`, `folder.jpg`, `artwork.jpg`, `artwork.png`, then any `.jpg`/`.png` found.
+
+### Tags
+
+| Prompt field | ID3 frame | Notes |
+|---|---|---|
+| Album | `TALB` | |
+| Album Artist | `TPE2` | |
+| Label | `TPUB` (Publisher) | Left blank = frame omitted |
+| Genre | `TCON` | Default: `Electronic` |
+| Year | `TDRC` | Default: current year |
+| Artist (per track) | `TPE1` | Parsed from filename |
+| Title (per track) | `TIT2` | Parsed from filename |
+| Track # (per track) | `TRCK` | Parsed from filename |
