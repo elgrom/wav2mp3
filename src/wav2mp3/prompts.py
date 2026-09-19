@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional, List, Dict
 
 
-def prompt_shared_tags(cover_art: Optional[Path], folder_info: Optional[Dict] = None) -> dict:
+def prompt_shared_tags(cover_art: Optional[Path], folder_info: Optional[Dict] = None, label: Optional[str] = None) -> dict:
     """Prompt for shared album-level tags.
 
     Args:
@@ -27,7 +27,7 @@ def prompt_shared_tags(cover_art: Optional[Path], folder_info: Optional[Dict] = 
 
     album = input(f"  Album [{default_album}]: ").strip() or default_album
     album_artist = input(f"  Album Artist [{default_artist}]: ").strip() or default_artist
-    label = input(f"  Label []: ").strip()
+    label = label if label is not None else input(f"  Label []: ").strip()
     genre = input(f"  Genre [Electronic]: ").strip() or "Electronic"
     year = input(f"  Year [{default_year}]: ").strip() or default_year
 

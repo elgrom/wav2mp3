@@ -59,6 +59,12 @@ def main():
         default=None,
         help="Cover art image: local file path or URL (http/https)",
     )
+    parser.add_argument(
+        "--label",
+        type=str,
+        default=None,
+        help="Record label written to the TPUB (Publisher) ID3 frame",
+    )
     args = parser.parse_args()
 
     target = args.path.resolve()
@@ -96,7 +102,7 @@ def main():
     folder_info = None if single_file else parse_folder_name(folder.name)
 
     # Shared tags
-    shared = prompt_shared_tags(cover_art, folder_info)
+    shared = prompt_shared_tags(cover_art, folder_info, label=args.label)
 
     # Step 3: Parse per-track tags
     tracks = []

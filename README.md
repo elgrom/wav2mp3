@@ -22,6 +22,7 @@ wav2mp3 /path/to/folder           # convert all WAVs in a folder
 wav2mp3 /path/to/track.wav        # convert a single file
 wav2mp3 --cover art.jpg .         # use a specific cover image
 wav2mp3 --cover https://example.com/cover.jpg /path/to/folder
+wav2mp3 --label "Metalheadz" /path/to/folder  # set record label without prompting
 ```
 
 ### What it does
